@@ -1,0 +1,336 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body,html{background:#E2DED8}
+.stage{background:#E2DED8;padding:28px 16px 36px;display:flex;flex-direction:column;align-items:center;min-height:100vh}
+.phone{width:355px;background:#1a1a1a;border-radius:50px;padding:10px;box-shadow:0 2px 0 2px #0a0a0a}
+.pi{border-radius:42px;overflow:hidden;background:#fff}
+.sb{background:#fff;padding:14px 22px 0;display:flex;align-items:center;justify-content:space-between}
+.sb-t{font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:#111}
+.sb-r{display:flex;align-items:center;gap:5px}
+.topnav{display:flex;align-items:center;justify-content:space-between;padding:9px 18px 10px;border-bottom:1px solid #EFEFEF;background:#fff}
+.logo{font-family:'Playfair Display',serif;font-size:17px;font-weight:400;letter-spacing:4px;text-transform:uppercase;color:#111}
+.nr{display:flex;gap:14px}
+.ni{width:17px;height:17px;stroke:#111;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+
+.screen{height:560px;overflow:hidden;background:#fff;position:relative}
+
+.view{
+  position:absolute;inset:0;
+  overflow-y:auto;overflow-x:hidden;
+  scrollbar-width:none;
+  background:#fff;
+  display:none;
+}
+.view.active{display:block}
+.view::-webkit-scrollbar{display:none}
+
+/* ENTRY */
+.hero{height:210px;background:#111;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:0 0 22px;position:relative;overflow:hidden}
+.hero-rings{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0.07;pointer-events:none}
+.lips-row{display:flex;align-items:flex-end;justify-content:center;gap:5px;margin-bottom:16px}
+.hero-eyebrow{font-family:'Inter',sans-serif;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:#666;margin-bottom:7px;text-align:center}
+.hero-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:400;font-style:italic;color:#fff;text-align:center;line-height:1.2}
+
+.entry-body{padding:22px 20px 28px}
+.entry-h{font-family:'Playfair Display',serif;font-size:17px;font-weight:400;color:#111;margin-bottom:6px}
+.entry-p{font-family:'Inter',sans-serif;font-size:11px;color:#aaa;line-height:1.65;margin-bottom:22px}
+
+.btn-solid{
+  display:block;width:100%;padding:15px 0;
+  background:#111;color:#fff;
+  border:none;
+  font-family:'Inter',sans-serif;font-size:12px;font-weight:500;letter-spacing:1px;text-transform:uppercase;
+  cursor:pointer;text-align:center;margin-bottom:10px;
+}
+.btn-outline{
+  display:block;width:100%;padding:13px 0;
+  background:#fff;color:#888;
+  border:1px solid #ddd;
+  font-family:'Inter',sans-serif;font-size:11px;
+  cursor:pointer;text-align:center;
+}
+
+/* STEP */
+.step-bar{padding:16px 20px 0;display:flex;align-items:center;gap:12px}
+.back{width:32px;height:32px;border:1px solid #E0DBD5;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;background:#fff}
+.prog-wrap{flex:1}
+.prog-track{height:2px;background:#EEE;border-radius:1px;overflow:hidden}
+.prog-bar-fill{height:100%;background:#111;transition:width 0.3s}
+.prog-lbl{font-family:'Inter',sans-serif;font-size:9px;color:#bbb;margin-top:4px;letter-spacing:0.5px}
+.step-q-wrap{padding:18px 20px 14px}
+.step-q-h{font-family:'Playfair Display',serif;font-size:19px;font-weight:400;color:#111;margin-bottom:5px}
+.step-q-s{font-family:'Inter',sans-serif;font-size:11px;color:#bbb;line-height:1.5}
+.opts{padding:0 20px;display:flex;flex-direction:column;gap:8px}
+.opt{
+  border:1.5px solid #EEEAE4;padding:12px 14px;
+  display:flex;align-items:center;gap:12px;
+  cursor:pointer;background:#fff;
+  transition:border-color 0.15s,background 0.15s;
+}
+.opt.sel{border-color:#111;background:#FAFAF8}
+.swatch-circle{width:34px;height:34px;border-radius:50%;flex-shrink:0;border:1px solid rgba(0,0,0,0.08)}
+.swatch-bar{width:44px;height:18px;border-radius:2px;flex-shrink:0}
+.opt-n{font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:#111;margin-bottom:1px}
+.opt-d{font-family:'Inter',sans-serif;font-size:10px;color:#bbb;line-height:1.35}
+
+.step-foot{padding:16px 20px 28px}
+.btn-next{
+  display:block;width:100%;padding:15px 0;
+  background:#ccc;color:#fff;
+  border:none;
+  font-family:'Inter',sans-serif;font-size:12px;font-weight:500;letter-spacing:1px;text-transform:uppercase;
+  cursor:not-allowed;text-align:center;
+  transition:background 0.2s;
+}
+.btn-next.on{background:#111;cursor:pointer}
+
+/* RESULTS */
+.res-hero{background:#111;padding:16px 20px 20px}
+.res-back{width:28px;height:28px;border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;cursor:pointer;margin-bottom:14px}
+.res-eyebrow{font-family:'Inter',sans-serif;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:#666;margin-bottom:6px}
+.res-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:400;font-style:italic;color:#fff;line-height:1.2;margin-bottom:5px}
+.res-sub{font-family:'Inter',sans-serif;font-size:10px;color:#555;margin-bottom:12px}
+.res-tags{display:flex;gap:6px}
+.res-tag{font-family:'Inter',sans-serif;font-size:8px;font-weight:500;letter-spacing:1px;text-transform:uppercase;padding:4px 9px;border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.45)}
+
+.sec-label{font-family:'Inter',sans-serif;font-size:9px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:#bbb;padding:16px 20px 10px}
+.shade-list{display:flex;flex-direction:column;gap:1px;background:#F0EDEA}
+.shade-card{background:#fff;display:flex;align-items:stretch;cursor:pointer}
+.shade-bar{width:70px;flex-shrink:0}
+.shade-info{padding:13px 12px;flex:1;min-width:0}
+.best-pill{display:inline-block;background:#111;color:#fff;font-family:'Inter',sans-serif;font-size:7.5px;font-weight:500;letter-spacing:1px;text-transform:uppercase;padding:3px 7px;margin-bottom:5px}
+.shade-n{font-family:'Playfair Display',serif;font-size:14px;font-weight:400;color:#111;margin-bottom:3px}
+.shade-w{font-family:'Inter',sans-serif;font-size:9.5px;color:#aaa;line-height:1.4;margin-bottom:7px}
+.shade-chip{background:#F7F4F0;padding:3px 8px;display:inline-block;font-family:'Inter',sans-serif;font-size:8.5px;color:#999}
+.shade-r{padding:13px 14px 13px 0;display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;flex-shrink:0}
+.shade-price{font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#111;margin-bottom:8px}
+.shade-bag{width:26px;height:26px;border:1px solid #111;display:flex;align-items:center;justify-content:center}
+.end-pad{height:30px}
+</style>
+
+<div class="stage">
+<div class="phone">
+<div class="pi">
+
+  <div class="sb">
+    <span class="sb-t">9:41</span>
+    <div class="sb-r">
+      <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><rect x="0" y="3" width="2.5" height="7" rx="0.4" fill="#111"/><rect x="3.8" y="2" width="2.5" height="8" rx="0.4" fill="#111"/><rect x="7.6" y="0.8" width="2.5" height="9.2" rx="0.4" fill="#111"/><rect x="11.4" y="0" width="2.5" height="10" rx="0.4" fill="#111" opacity="0.2"/></svg>
+      <svg width="16" height="11" viewBox="0 0 16 11" fill="none"><rect x="0.5" y="0.5" width="13" height="10" rx="1.5" stroke="#111" stroke-width="1.2" fill="none"/><rect x="14" y="3.5" width="1.5" height="4" rx="0.8" fill="#111" opacity="0.4"/><rect x="2" y="2" width="9" height="7" rx="0.5" fill="#111"/></svg>
+    </div>
+  </div>
+
+  <div class="topnav">
+    <svg width="15" height="12" viewBox="0 0 18 14" fill="none" stroke="#111" stroke-width="1.6" stroke-linecap="round"><line x1="1" y1="2" x2="17" y2="2"/><line x1="1" y1="7" x2="17" y2="7"/><line x1="1" y1="12" x2="11" y2="12"/></svg>
+    <div class="logo">Pilgrim</div>
+    <div class="nr">
+      <svg class="ni" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.5" y2="16.5"/></svg>
+      <svg class="ni" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+    </div>
+  </div>
+
+  <div class="screen">
+
+    <!-- VIEW 0: ENTRY -->
+    <div class="view active" id="v0">
+      <div class="hero">
+        <div class="hero-rings">
+          <svg width="300" height="300" viewBox="0 0 300 300" fill="none"><circle cx="150" cy="150" r="140" stroke="white" stroke-width="1.5"/><circle cx="150" cy="150" r="100" stroke="white" stroke-width="1.5"/><circle cx="150" cy="150" r="60" stroke="white" stroke-width="1.5"/></svg>
+        </div>
+        <div class="lips-row">
+          <svg width="16" height="58" viewBox="0 0 16 58" fill="none"><rect x="3" y="14" width="10" height="40" rx="2" fill="#C4547A"/><rect x="3" y="14" width="10" height="9" rx="2" fill="#A83865"/><rect x="4" y="7" width="8" height="9" rx="1.5" fill="#922F58"/></svg>
+          <svg width="16" height="66" viewBox="0 0 16 66" fill="none"><rect x="3" y="18" width="10" height="44" rx="2" fill="#8B1A3A"/><rect x="3" y="18" width="10" height="9" rx="2" fill="#700F2A"/><rect x="4" y="9" width="8" height="11" rx="1.5" fill="#5C0A20"/></svg>
+          <svg width="16" height="76" viewBox="0 0 16 76" fill="none"><rect x="3" y="22" width="10" height="50" rx="2" fill="#E8756A"/><rect x="3" y="22" width="10" height="10" rx="2" fill="#D45A50"/><rect x="4" y="11" width="8" height="13" rx="1.5" fill="#C04840"/></svg>
+          <svg width="16" height="66" viewBox="0 0 16 66" fill="none"><rect x="3" y="18" width="10" height="44" rx="2" fill="#B54870"/><rect x="3" y="18" width="10" height="9" rx="2" fill="#983060"/><rect x="4" y="9" width="8" height="11" rx="1.5" fill="#7A2250"/></svg>
+          <svg width="16" height="58" viewBox="0 0 16 58" fill="none"><rect x="3" y="14" width="10" height="40" rx="2" fill="#D4846A"/><rect x="3" y="14" width="10" height="9" rx="2" fill="#BA6855"/><rect x="4" y="7" width="8" height="9" rx="1.5" fill="#A05545"/></svg>
+        </div>
+        <div class="hero-eyebrow">Bullet Lipstick · 32 shades</div>
+        <div class="hero-title">Find your perfect shade</div>
+      </div>
+      <div class="entry-body">
+        <div class="entry-h">Not sure which shade is yours?</div>
+        <div class="entry-p">Tell us your skin tone and undertone — we'll match you to the shades from our collection that were made for your skin.</div>
+        <button class="btn-solid" id="startBtn">Find my shade</button>
+        <button class="btn-outline">Browse all 32 shades</button>
+      </div>
+    </div>
+
+    <!-- VIEW 1: SKIN TONE -->
+    <div class="view" id="v1">
+      <div class="step-bar">
+        <div class="back" id="back1">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </div>
+        <div class="prog-wrap">
+          <div class="prog-track"><div class="prog-bar-fill" style="width:50%"></div></div>
+          <div class="prog-lbl">Step 1 of 2</div>
+        </div>
+      </div>
+      <div class="step-q-wrap">
+        <div class="step-q-h">What's your skin tone?</div>
+        <div class="step-q-s">How does your skin look in natural daylight?</div>
+      </div>
+      <div class="opts" id="tone-opts">
+        <div class="opt" data-v="fair"><div class="swatch-circle" style="background:#F5D5B8"></div><div><div class="opt-n">Fair</div><div class="opt-d">Very light · often burns in sun</div></div></div>
+        <div class="opt" data-v="light"><div class="swatch-circle" style="background:#E8B98A"></div><div><div class="opt-n">Light</div><div class="opt-d">Light beige · tans slowly</div></div></div>
+        <div class="opt" data-v="medium"><div class="swatch-circle" style="background:#C8885A"></div><div><div class="opt-n">Medium</div><div class="opt-d">Warm beige to light brown</div></div></div>
+        <div class="opt" data-v="tan"><div class="swatch-circle" style="background:#A0663A"></div><div><div class="opt-n">Tan</div><div class="opt-d">Medium to deep brown</div></div></div>
+        <div class="opt" data-v="deep"><div class="swatch-circle" style="background:#6A3C20"></div><div><div class="opt-n">Deep</div><div class="opt-d">Rich deep brown to ebony</div></div></div>
+      </div>
+      <div class="step-foot">
+        <button class="btn-next" id="btn1">Next →</button>
+      </div>
+    </div>
+
+    <!-- VIEW 2: UNDERTONE -->
+    <div class="view" id="v2">
+      <div class="step-bar">
+        <div class="back" id="back2">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </div>
+        <div class="prog-wrap">
+          <div class="prog-track"><div class="prog-bar-fill" style="width:100%"></div></div>
+          <div class="prog-lbl">Step 2 of 2</div>
+        </div>
+      </div>
+      <div class="step-q-wrap">
+        <div class="step-q-h">What's your undertone?</div>
+        <div class="step-q-s">Check the veins on your inner wrist in natural light</div>
+      </div>
+      <div class="opts" id="und-opts">
+        <div class="opt" data-v="cool"><div class="swatch-bar" style="background:#9B89C4"></div><div><div class="opt-n">Cool</div><div class="opt-d">Veins look blue-purple · suits pinks & berries</div></div></div>
+        <div class="opt" data-v="warm"><div class="swatch-bar" style="background:#D4845A"></div><div><div class="opt-n">Warm</div><div class="opt-d">Veins look green · suits corals & nudes</div></div></div>
+        <div class="opt" data-v="neutral"><div class="swatch-bar" style="background:#B89878"></div><div><div class="opt-n">Neutral</div><div class="opt-d">Mix of both · most shades work for you</div></div></div>
+        <div class="opt" data-v="olive"><div class="swatch-bar" style="background:#8A9A60"></div><div><div class="opt-n">Olive</div><div class="opt-d">Greenish tint · suits earthy tones</div></div></div>
+      </div>
+      <div class="step-foot">
+        <button class="btn-next" id="btn2">See my shades →</button>
+      </div>
+    </div>
+
+    <!-- VIEW 3: RESULTS -->
+    <div class="view" id="v3">
+      <div class="res-hero">
+        <div class="res-back" id="back3">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </div>
+        <div class="res-eyebrow">Your match</div>
+        <div class="res-title" id="res-title">Your shades, curated</div>
+        <div class="res-sub" id="res-sub">Based on your skin profile</div>
+        <div class="res-tags" id="res-tags"></div>
+      </div>
+      <div class="sec-label">Recommended for you</div>
+      <div class="shade-list" id="shade-list"></div>
+      <div class="end-pad"></div>
+    </div>
+
+  </div>
+
+</div>
+</div>
+</div>
+
+<script>
+var sel = {tone:null, und:null};
+
+var data = {
+  fair_cool:    [{n:'Berry Crush',    h:'#8B1A3A',w:'Cool berry flatters fair cool skin',    best:true},  {n:'Rose Petal',   h:'#C4547A',w:'Soft pink-rose — a fair cool classic',  best:false},{n:'Fuchsia Bloom', h:'#B5306A',w:'Bold cool pink for fair skin',         best:false}],
+  fair_warm:    [{n:'Peachy Nude',    h:'#D4846A',w:'Warm peach suits fair warm tone',       best:true},  {n:'Coral Kiss',   h:'#E8756A',w:'Fresh coral for fair warm skin',        best:false},{n:'Dusty Rose',    h:'#C87868',w:'Muted rose is warm & flattering',      best:false}],
+  fair_neutral: [{n:'Mauve Magic',    h:'#B57880',w:'Mauve is perfect for neutral skin',     best:true},  {n:'Rose Petal',   h:'#C4547A',w:'Classic pink for neutral undertones',   best:false},{n:'Peachy Nude',   h:'#D4846A',w:'Versatile nude for fair neutral skin',  best:false}],
+  fair_olive:   [{n:'Terracotta',     h:'#B85C38',w:'Earthy terracotta warms olive skin',    best:true},  {n:'Burnt Sienna', h:'#A04830',w:'Deep earthy tone for fair olive',       best:false},{n:'Dusty Rose',    h:'#C87868',w:'Muted warmth suits olive undertones',  best:false}],
+  light_cool:   [{n:'Berry Crush',    h:'#8B1A3A',w:'Deep berry pops on light cool skin',   best:true},  {n:'Mulberry Wine',h:'#722050',w:'Rich plum for cool light skin',          best:false},{n:'Fuchsia Bloom', h:'#B5306A',w:'Vibrant cool pink for light skin',      best:false}],
+  light_warm:   [{n:'Coral Kiss',     h:'#E8756A',w:'Bright coral suits light warm skin',   best:true},  {n:'Cinnamon Nude',h:'#C07850',w:'Warm nude for light golden tones',      best:false},{n:'Terracotta',    h:'#B85C38',w:'Earthy warmth on light skin',           best:false}],
+  light_neutral:[{n:'Mauve Magic',    h:'#B57880',w:'Flatters light neutral skin perfectly',best:true},  {n:'Rose Petal',   h:'#C4547A',w:'Balanced pink for neutral light tones', best:false},{n:'Berry Crush',   h:'#8B1A3A',w:'Rich berry works on neutral skin',      best:false}],
+  light_olive:  [{n:'Terracotta',     h:'#B85C38',w:'Earthy tones love olive undertones',   best:true},  {n:'Brick Red',    h:'#963828',w:'Deep brick for light olive skin',        best:false},{n:'Cinnamon Nude', h:'#C07850',w:'Warm cinnamon for olive light skin',    best:false}],
+  medium_cool:  [{n:'Raspberry',      h:'#A02050',w:'Raspberry deepens beautifully on you', best:true},  {n:'Berry Crush',  h:'#8B1A3A',w:'Rich berry flatters medium cool',        best:false},{n:'Fuchsia Bloom', h:'#B5306A',w:'Bright pink pops on medium skin',       best:false}],
+  medium_warm:  [{n:'Terracotta',     h:'#B85C38',w:'Earthy terracotta — made for you',     best:true},  {n:'Burnt Sienna', h:'#A04830',w:'Deep warm earth suits medium skin',     best:false},{n:'Cinnamon Nude', h:'#C07850',w:'Rich warm nude for medium warm skin',  best:false}],
+  medium_neutral:[{n:'Brick Red',     h:'#963828',w:'Bold red suits medium neutral skin',   best:true},  {n:'Terracotta',   h:'#B85C38',w:'Earthy warmth on neutral medium',       best:false},{n:'Raspberry',     h:'#A02050',w:'Rich berry for neutral medium skin',    best:false}],
+  medium_olive: [{n:'Burnt Sienna',   h:'#A04830',w:'Deep earthy warmth for olive medium',  best:true},  {n:'Brick Red',    h:'#963828',w:'Muted red for olive medium skin',        best:false},{n:'Terracotta',    h:'#B85C38',w:"Warm earth — olive skin's best friend",  best:false}],
+  tan_cool:     [{n:'Deep Berry',     h:'#601540',w:'Intense berry defines cool tan skin',  best:true},  {n:'Mulberry Wine',h:'#722050',w:'Rich plum suits tan cool tones',         best:false},{n:'Raspberry',     h:'#A02050',w:'Bold cool pink on tan skin',            best:false}],
+  tan_warm:     [{n:'Brick Red',      h:'#963828',w:'Deep brick is perfect for warm tan',   best:true},  {n:'Burnt Sienna', h:'#A04830',w:'Earthy sienna complements tan skin',    best:false},{n:'Cinnamon Nude', h:'#C07850',w:'Warm nude suits deep tan beautifully',  best:false}],
+  tan_neutral:  [{n:'Brick Red',      h:'#963828',w:'Flatters tan neutral skin every time', best:true},  {n:'Deep Berry',   h:'#601540',w:'Rich depth for tan neutral skin',         best:false},{n:'Burnt Sienna',  h:'#A04830',w:'Warm earth on neutral tan skin',       best:false}],
+  tan_olive:    [{n:'Burnt Sienna',   h:'#A04830',w:"Earth tones are iconic on olive tan",  best:true},  {n:'Brick Red',    h:'#963828',w:'Deep red-earthy tone for tan olive',     best:false},{n:'Deep Berry',    h:'#601540',w:'Dark berry makes olive tan skin glow',  best:false}],
+  deep_cool:    [{n:'Deep Berry',     h:'#601540',w:'Rich berry is stunning on deep cool',  best:true},  {n:'Mulberry Wine',h:'#722050',w:'Deep plum pops on cool deep skin',       best:false},{n:'Berry Crush',   h:'#8B1A3A',w:'Dark berry complements deep skin',      best:false}],
+  deep_warm:    [{n:'Brick Red',      h:'#963828',w:'Bold brick radiates on deep warm skin',best:true},  {n:'Burnt Sienna', h:'#A04830',w:'Earthy sienna flatters deep warm skin', best:false},{n:'Deep Berry',    h:'#601540',w:'Dark jewels elevate deep skin',         best:false}],
+  deep_neutral: [{n:'Deep Berry',     h:'#601540',w:'Dark jewel tones made for deep skin',  best:true},  {n:'Brick Red',    h:'#963828',w:'Bold earth for neutral deep skin',       best:false},{n:'Mulberry Wine', h:'#722050',w:'Deep plum for neutral deep skin',      best:false}],
+  deep_olive:   [{n:'Burnt Sienna',   h:'#A04830',w:'Deep earthy warmth for olive deep',    best:true},  {n:'Brick Red',    h:'#963828',w:'Rich red earth for olive deep skin',     best:false},{n:'Deep Berry',    h:'#601540',w:'Dark berry makes deep olive skin glow', best:false}],
+};
+
+var toneL = {fair:'Fair',light:'Light',medium:'Medium',tan:'Tan',deep:'Deep'};
+var undL  = {cool:'Cool',warm:'Warm',neutral:'Neutral',olive:'Olive'};
+
+function show(id){
+  document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
+  var el = document.getElementById(id);
+  el.classList.add('active');
+  el.scrollTop = 0;
+}
+
+document.getElementById('startBtn').addEventListener('click', function(){ show('v1'); });
+
+document.getElementById('back1').addEventListener('click', function(){ show('v0'); });
+document.getElementById('back2').addEventListener('click', function(){ show('v1'); });
+document.getElementById('back3').addEventListener('click', function(){ show('v0'); sel.tone=null; sel.und=null; });
+
+document.querySelectorAll('#tone-opts .opt').forEach(function(opt){
+  opt.addEventListener('click', function(){
+    document.querySelectorAll('#tone-opts .opt').forEach(function(o){ o.classList.remove('sel'); });
+    opt.classList.add('sel');
+    sel.tone = opt.getAttribute('data-v');
+    document.getElementById('btn1').classList.add('on');
+  });
+});
+
+document.querySelectorAll('#und-opts .opt').forEach(function(opt){
+  opt.addEventListener('click', function(){
+    document.querySelectorAll('#und-opts .opt').forEach(function(o){ o.classList.remove('sel'); });
+    opt.classList.add('sel');
+    sel.und = opt.getAttribute('data-v');
+    document.getElementById('btn2').classList.add('on');
+  });
+});
+
+document.getElementById('btn1').addEventListener('click', function(){
+  if(!sel.tone) return;
+  show('v2');
+});
+
+document.getElementById('btn2').addEventListener('click', function(){
+  if(!sel.und) return;
+  buildResults();
+  show('v3');
+});
+
+function buildResults(){
+  var key = sel.tone + '_' + sel.und;
+  var list = data[key] || data['medium_neutral'];
+
+  document.getElementById('res-title').innerHTML = 'Your shades, <em>curated</em>';
+  document.getElementById('res-sub').textContent = toneL[sel.tone] + ' skin · ' + undL[sel.und] + ' undertone';
+
+  var tags = document.getElementById('res-tags');
+  tags.innerHTML = '<div class="res-tag">'+toneL[sel.tone]+'</div><div class="res-tag">'+undL[sel.und]+' undertone</div>';
+
+  var sl = document.getElementById('shade-list');
+  sl.innerHTML = '';
+  list.forEach(function(s){
+    var d = document.createElement('div');
+    d.className = 'shade-card';
+    d.innerHTML =
+      '<div class="shade-bar" style="background:'+s.h+'"></div>'+
+      '<div class="shade-info">'+
+        (s.best ? '<div class="best-pill">Best match</div>' : '<div style="height:8px"></div>')+
+        '<div class="shade-n">'+s.n+'</div>'+
+        '<div class="shade-w">'+s.w+'</div>'+
+        '<div class="shade-chip">Matched to your profile</div>'+
+      '</div>'+
+      '<div class="shade-r">'+
+        '<div class="shade-price">₹349</div>'+
+        '<div class="shade-bag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></div>'+
+      '</div>';
+    sl.appendChild(d);
+  });
+}
+</script>
